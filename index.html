@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Chaska - Scan. Order. Enjoy.</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast">Message here</div>
+
+    <!-- ===========================
+         VIEW 1: PUBLIC LANDING PAGE
+         =========================== -->
+    <div id="landingView" class="fade-in">
+        <nav>
+            <div class="logo">
+                <span style="font-size: 28px;">☕</span> Cafe Chaska
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#" onclick="openModal('howItWorksModal')">How it works</a>
+                <a href="#">About Us </a>
+                <a href="#">Contact us</a>
+            </div>
+            <button class="btn-partner" onclick="openModal('partnerModal')">Partner with Us</button>
+        </nav>
+
+        <div class="hero">
+            <h1>Scan. Order. Enjoy.</h1>
+            <p>Discover amazing cafes near you and skip the waiting line.</p>
+            <button class="btn-explore" onclick="scrollToGrid()">Explore Cafes</button>
+
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search for cafes or dishes..."
+                    onkeyup="filterCafes()">
+            </div>
+        </div>
+
+        <div class="cafe-section" id="cafeGrid">
+            <h2 class="section-title">Popular Cafes Near You</h2>
+            <div class="grid">
+                <div class="card" onclick="openMenu('The Daily Grind')">
+                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=500" alt="Cafe"
+                        class="card-img">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <span class="cafe-name">The Daily Grind</span>
+                            <span class="rating">4.5 ★</span>
+                        </div>
+                        <div class="distance">📍 0.5 km away • Coffee & Snacks</div>
+                    </div>
+                </div>
+                <div class="card" onclick="openMenu('Brew Haven')">
+                    <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=500" alt="Cafe"
+                        class="card-img">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <span class="cafe-name">Brew Haven</span>
+                            <span class="rating">4.2 ★</span>
+                        </div>
+                        <div class="distance">📍 1.2 km away • Bakery</div>
+                    </div>
+                </div>
+                <div class="card" onclick="openMenu('Gamers Den')">
+                    <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=500" alt="Cafe"
+                        class="card-img">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <span class="cafe-name">Gamer's Den</span>
+                            <span class="rating">4.8 ★</span>
+                        </div>
+                        <div class="distance">📍 2.0 km away • Gaming Cafe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:20px; opacity:0.5;">
+            <button onclick="resetDemo()"
+                style="background:none; border:none; text-decoration:underline; font-size:12px; cursor:pointer; color:#aaa;">Reset
+                Demo Data</button>
+        </div>
+    </div>
+
+    <!-- ===========================
+         VIEW 2: CUSTOMER MENU (Instagram Style)
+         =========================== -->
+    <div id="menuView" class="fade-in">
+        <div class="menu-header">
+            <span class="back-icon" onclick="closeMenu()">←</span>
+            <div class="menu-username" id="menuTitle">cafe_name <span class="blue-tick">✔</span></div>
+            <div style="display:flex; gap:15px;">
+                <span>🔔</span>
+                <span>🛒 <span id="cartCount"
+                        style="background:red; font-size:10px; padding:2px 5px; border-radius:10px; position:absolute;">0</span></span>
+            </div>
+        </div>
+
+        <div class="profile-info">
+            <div class="profile-top">
+                <div class="profile-pic-ring">
+                    <div class="profile-pic">☕</div>
+                </div>
+                <div class="stats">
+                    <div><span class="stat-num">45</span><span class="stat-label">Items</span></div>
+                    <div><span class="stat-num">4.8</span><span class="stat-label">Rating</span></div>
+                    <div><span class="stat-num">1.2k</span><span class="stat-label">Reviews</span></div>
+                </div>
+            </div>
+
+            <div class="bio">
+                <b>Cafe Chaska ☕🔥</b><br>
+                Food & Drink Service<br>
+                📍 123, Food Street, Taste City<br>
+                ⚡ Scan. Order. Eat. Repeat.
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-order" onclick="placeOrder()">Place Order Now</button>
+                <button class="btn-contact">Book Table</button>
+            </div>
+        </div>
+
+        <div class="menu-tab active" onclick="switchMenuTab('menu')">MENU</div>
+        <div class="menu-tab" onclick="switchMenuTab('reviews')">REVIEWS</div>
+        <div class="menu-tab" onclick="switchMenuTab('info')">INFO</div>
+        <div class="menu-tab" onclick="switchMenuTab('orders')">ORDERS</div>
+    </div>
+
+    <div class="menu-grid">
+        <!-- Menu Item 1 -->
+        <div class="menu-item-box">
+            <span class="item-emoji">🍔</span>
+            <span class="item-price-tag">₹149</span>
+            <button class="add-btn" onclick="addToCart('Burger')">ADD</button>
+        </div>
+        <!-- Menu Item 2 -->
+        <div class="menu-item-box">
+            <span class="item-emoji">🍕</span>
+            <span class="item-price-tag">₹299</span>
+            <button class="add-btn" onclick="addToCart('Pizza')">ADD</button>
+        </div>
+        <!-- Menu Item 3 -->
+        <div class="menu-item-box">
+            <span class="item-emoji">☕</span>
+            <span class="item-price-tag">₹99</span>
+            <button class="add-btn" onclick="addToCart('Coffee')">ADD</button>
+        </div>
+        <!-- Menu Item 4 -->
+        <div class="menu-item-box">
+            <span class="item-emoji">🍝</span>
+            <span class="item-price-tag">₹249</span>
+            <button class="add-btn" onclick="addToCart('Pasta')">ADD</button>
+        </div>
+        <!-- Menu Item 5 -->
+        <div class="menu-item-box">
+            <span class="item-emoji">🍟</span>
+            <span class="item-price-tag">₹129</span>
+            <button class="add-btn" onclick="addToCart('Fries')">ADD</button>
+        </div>
+        <!-- Menu Item 6 -->
+        <div class="menu-item-box">
+            <span class="item-emoji">🥤</span>
+            <span class="item-price-tag">₹119</span>
+            <button class="add-btn" onclick="addToCart('Shake')">ADD</button>
+        </div>
+    </div>
+    </div>
+
+    <!-- My Orders Tab Content -->
+    <div id="ordersTabContent">
+        <h3 style="margin-bottom: 20px;">📜 Your Past Orders</h3>
+        <div id="historyList">
+            <p style="text-align:center; color:#666; margin-top:50px;">No past orders found.</p>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- ===========================
+         VIEW 3: OWNER DASHBOARD
+         =========================== -->
+    <div id="dashboardView" class="dashboard-container fade-in">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <span>☕</span> Cafe Chaska
+            </div>
+
+            <div class="menu-item active" onclick="switchDashboardTab('dashboard')" id="nav-dashboard">
+                <span>📊</span> Dashboard
+            </div>
+            <div class="menu-item" onclick="switchDashboardTab('qr')" id="nav-qr">
+                <span>📱</span> QR Codes
+            </div>
+            <div class="menu-item">
+                <span>🍽️</span> Tables
+            </div>
+            <div class="menu-item">
+                <span>📝</span> Orders <span
+                    style="background:var(--primary); color:white; padding:2px 6px; border-radius:10px; font-size:10px; margin-left:auto;">3</span>
+            </div>
+            <div class="menu-item">
+                <span>📜</span> Menu Manager
+            </div>
+            <div class="menu-item">
+                <span>⚙️</span> Settings
+            </div>
+
+            <div class="menu-item logout-btn" onclick="handleLogout()">
+                <span>🚪</span> Logout
+            </div>
+        </aside>
+
+        <!-- Right Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="top-header">
+                <div class="welcome-text">
+                    <h2>Good Morning, Royal Cafe! 👋</h2>
+                    <p>Here's what's happening in your cafe today.</p>
+                </div>
+                <div class="user-profile">
+                    <span style="font-size: 20px;">🔔</span>
+                    <div class="user-avatar"></div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total Revenue</span>
+                    <div class="stat-value">₹12,450</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Active Orders</span>
+                    <div class="stat-value" style="color: var(--primary)">8</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Total Customers</span>
+                    <div class="stat-value">45</div>
+                </div>
+            </div>
+
+            <!-- Floor Plan & Orders -->
+            <div class="dashboard-grid">
+
+                <!-- Floor Plan -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Floor Plan</h3>
+                        <div style="font-size: 12px; color: #888;">
+                            <span style="color:var(--primary)">■ Occupied</span> &nbsp;
+                            <span style="color:#249a3e">■ Billing</span>
+                        </div>
+                    </div>
+                    <div class="tables-grid">
+                        <div class="table-box table-occupied">1</div>
+                        <div class="table-box table-occupied">2</div>
+                        <div class="table-box table-empty">3</div>
+                        <div class="table-box table-empty">4</div>
+                        <div class="table-box table-billing">5</div>
+                        <div class="table-box table-occupied">6</div>
+                        <div class="table-box table-empty">7</div>
+                        <div class="table-box table-empty">8</div>
+                        <div class="table-box table-billing">9</div>
+                        <div class="table-box table-empty">10</div>
+                        <div class="table-box table-occupied">11</div>
+                        <div class="table-box table-empty">12</div>
+                    </div>
+                </div>
+
+                <!-- Live Orders -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Live Orders</h3>
+                    </div>
+
+                    <div id="liveOrdersList">
+                        <!-- Dynamic Orders Here -->
+                    </div>
+
+                </div>
+
+                <!-- QR Generator Panel (Hidden by default) -->
+                <div class="panel" id="qrPanel" style="display: none;">
+                    <div class="panel-header">
+                        <h3>QR Code Generator</h3>
+                        <p style="font-size: 14px; color: #888;">Print QR codes for your tables.</p>
+                    </div>
+                    <div class="qr-grid" id="qrGrid">
+                        <!-- Dynamic QR Cards will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- === MODALS === -->
+
+    <!-- How It Works Modal -->
+    <div id="howItWorksModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('howItWorksModal')">&times;</span>
+            <h2 style="margin-bottom: 20px;">How Cafe Chaska Works</h2>
+            <div class="step">
+                <div class="step-icon">1</div>
+                <div>
+                    <h3>Scan QR Code</h3>
+                    <p style="color: #666; font-size: 14px;">Simply scan the QR code placed on your table using your
+                        phone camera.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-icon">2</div>
+                <div>
+                    <h3>Select Food</h3>
+                    <p style="color: #666; font-size: 14px;">Browse the digital menu, customize your items, and add them
+                        to cart.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-icon">3</div>
+                <div>
+                    <h3>Enjoy!</h3>
+                    <p style="color: #666; font-size: 14px;">Your order is sent directly to the kitchen. Sit back and
+                        relax.</p>
+                </div>
+            </div>
+            <button class="btn-explore" style="width: 100%;" onclick="closeModal('howItWorksModal')">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Partner Login Modal -->
+    <div id="partnerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('partnerModal')">&times;</span>
+
+            <div class="tab-container">
+                <div class="tab active" onclick="switchTab('login')">Owner Login</div>
+                <div class="tab" onclick="switchTab('register')">New Partner</div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm">
+                <h2 style="margin-bottom: 15px;">Welcome Back Partner!</h2>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" class="form-input" placeholder="+91 98765 43210">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" placeholder="••••••">
+                </div>
+                <button class="btn-partner" style="width: 100%;" onclick="handleLogin()">Login to Dashboard</button>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <h2 style="margin-bottom: 15px;">Register Your Cafe</h2>
+                <div class="form-group">
+                    <label class="form-label">Cafe Name</label>
+                    <input type="text" class="form-input" placeholder="e.g. Royal Cafe">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Owner Name</label>
+                    <input type="text" class="form-input" placeholder="Your Full Name">
+                </div>
+                <button class="btn-partner" style="width: 100%;" onclick="handleLogin()">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bill Receipt Modal -->
+    <div id="billModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-btn" onclick="closeModal('billModal')">&times;</span>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="color: var(--primary);">🧾 Cafe Chaska</h2>
+                <p style="color: #666; font-size: 14px;">Taste City, Food Street</p>
+                <p style="color: #888; font-size: 12px; margin-top: 5px;" id="billDate">Date: --/--/----</p>
+            </div>
+
+            <div class="bill-divider"></div>
+
+            <div id="billItems">
+                <!-- Items go here -->
+            </div>
+
+            <div class="bill-divider"></div>
+
+            <div class="bill-row">
+                <span>Subtotal</span>
+                <span id="billSubtotal">₹0</span>
+            </div>
+            <div class="bill-row">
+                <span>Tax (5%)</span>
+                <span id="billTax">₹0</span>
+            </div>
+            <div class="bill-row bill-total">
+                <span>Grand Total</span>
+                <span id="billGrandTotal" style="color: var(--primary);">₹0</span>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <button class="btn-partner" style="width: 100%; margin-bottom: 10px;"
+                    onclick="confirmPayment('cash')">💵 Pay with Cash</button>
+                <button class="btn-partner" style="width: 100%; background: #249a3e;" onclick="confirmPayment('upi')">📱
+                    Pay with UPI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script src="index.js"></script>
+</body>
+
+</html>
